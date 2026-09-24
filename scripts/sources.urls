@@ -1,0 +1,4 @@
+foo2zjs.tar.xz https://deb.debian.org/debian/pool/main/f/foo2zjs/foo2zjs_20200505dfsg0.orig.tar.xz
+pappl.tar.gz https://codeload.github.com/michaelrsweet/pappl/tar.gz/refs/tags/v1.4.10
+libressl.tar.gz https://ftp.openbsd.org/pub/OpenBSD/LibreSSL/libressl-4.0.0.tar.gz
+pkgconf.tar.xz https://distfiles.ariadne.space/pkgconf/pkgconf-2.3.0.tar.xz

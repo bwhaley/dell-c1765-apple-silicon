@@ -1,0 +1,35 @@
+name: Build macOS package
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  build:
+    runs-on: macos-15
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          persist-credentials: false
+      - name: Check shell scripts
+        run: |
+          for script in scripts/*.sh scripts/*.command; do sh -n "$script"; done
+      - name: Test printer discovery and selection
+        run: python3 tests/test-discovery.py
+      - name: Download verified dependencies
+        run: sh scripts/fetch-sources.sh
+      - name: Build native binaries
+        run: |
+          sh scripts/unpack-sources.sh
+          sh scripts/build.sh
+      - name: Package binaries and corresponding source
+        run: sh scripts/package.sh
+      - uses: actions/upload-artifact@v6
+        with:
+          name: DellNative-macOS-arm64
+          path: |
+            dist/*.zip
+            dist/*.sha256
+          if-no-files-found: error
