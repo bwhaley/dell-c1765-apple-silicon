@@ -2,6 +2,8 @@
 
 ## 0.3.0 — Unreleased
 
+- License original project code and documentation under MIT; retain upstream terms.
+
 - Prepare a public source repository, verified dependency downloads, and CI build.
 - Discover C1765nfw printers with Bonjour, automatically select a single match,
   and offer selection or manual entry when needed.

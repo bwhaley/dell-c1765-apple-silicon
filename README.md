@@ -99,6 +99,6 @@ record for what has actually been checked.
 
 ## License and attribution
 
-Original code is GPL-2.0-or-later; see [LICENSE](LICENSE).
+Original code is MIT; see [LICENSE](LICENSE).
 [Third-party notices](THIRD_PARTY_NOTICES.md) cover dependencies.
-[Dell artwork](assets/README.md) is separately attributed and is not GPL licensed.
+[Dell artwork](assets/README.md) is separately attributed and is not covered by the MIT license.

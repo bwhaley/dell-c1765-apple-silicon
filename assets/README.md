@@ -6,7 +6,7 @@
 
 The artwork is included to identify the supported physical printer. Dell retains
 ownership of its artwork and trademarks. These assets are not covered by this
-project's GPL license; no license grant from Dell is asserted. This project is
+project's MIT license; no license grant from Dell is asserted. This project is
 independent of Dell and is not endorsed by Dell.
 
 The build and installer derive AirPrint PNG sizes from the bundled ICNS file.

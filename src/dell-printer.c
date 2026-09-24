@@ -1,4 +1,4 @@
-// Prototype Dell C1765 IPP bridge. Original code licensed under GPL-2.0-or-later.
+// Prototype Dell C1765 IPP bridge. Original code licensed under MIT.
 #include <pappl/pappl.h>
 #include <spawn.h>
 #include <sys/wait.h>
