@@ -1,6 +1,12 @@
 # Changelog
 
-## 0.3.0 — Unreleased
+## 0.3.1 — 2026-09-25
+
+- Run the printer service without PAPPL's menu-bar icon.
+- Keep printer settings available at http://localhost:8631/.
+- Publish tagged releases with installer and source through GitHub Actions.
+
+## 0.3.0 — 2026-09-24
 
 - License original project code and documentation under MIT; retain upstream terms.
 

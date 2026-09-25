@@ -57,3 +57,14 @@ For a live discovery check without installing or printing, run
 `sh scripts/select-printer.sh`. A single physical C1765nfw was discovered over
 Bonjour on macOS 27 without entering an address. The advertised hostname was
 used rather than recording a machine-specific IP address in the repository.
+
+## 0.3.1 background-service validation
+
+- Built and packaged from a clean source tree with the included PAPPL patch.
+- Verified the patch applies to pristine upstream sources and is safe to rerun.
+- Installed on macOS 27; verified version 0.3.1 and no registered menu-bar app.
+- Repeated color and monochrome two-page capture tests for both PWG and Apple
+  Raster through the installed service, checking HBPL framing and color planes.
+- Restarted the service and checked that the menu-bar app did not return.
+- All 10 Bonjour discovery/selection tests pass. No physical pages were printed
+  for this update.

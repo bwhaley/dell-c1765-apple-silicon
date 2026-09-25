@@ -11,6 +11,10 @@ see assets/README.md for its origin and attribution.
 | LibreSSL | 4.0.0 | Multiple permissive licenses; COPYING | Statically linked TLS libraries |
 | pkgconf | 2.3.0 | ISC-style; COPYING | Build tool only |
 
+The PAPPL source is modified by patches/pappl-no-status-ui.patch to allow this
+build to omit the macOS menu-bar UI. The patch and build flags are included in
+the corresponding source bundle; upstream notices remain unchanged.
+
 Exact source URLs and SHA-256 hashes are in scripts/sources.urls and
 scripts/sources.sha256. Release ZIPs include the pinned upstream source archives,
 original project source, build scripts, and license notices. Upstream source

@@ -59,7 +59,8 @@ Moving or deleting the source checkout does not affect the installed service.
 The service listens on localhost:8631 and forwards jobs to the printer's port
 9100. macOS rasterizes documents using its native AirPrint support. The installer
 uses macOS's `ipp2ppd` utility to configure the queue and register its icon.
-Only one service instance can run per user.
+Only one service instance can run per user. The service runs without a menu-bar
+icon. Open http://localhost:8631/ for printer status and settings.
 
 Run the installed `Uninstall.command` (or the one in the package) to remove the
 native queue and service and move installed files to Trash. Other printer queues

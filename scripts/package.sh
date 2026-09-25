@@ -20,7 +20,7 @@ cp vendor/libressl-4.0.0/COPYING "$stage/Notices/LibreSSL-COPYING.txt"
 cp vendor/pkgconf-2.3.0/COPYING "$stage/Notices/pkgconf-COPYING.txt"
 cp README.md LICENSE THIRD_PARTY_NOTICES.md VERSION CHANGELOG.md CONTRIBUTING.md "$stage/"
 ditto assets "$stage/assets"
-for directory in src scripts tests docs assets; do ditto "$directory" "$stage/Source/$directory"; done
+for directory in src scripts tests docs assets patches; do ditto "$directory" "$stage/Source/$directory"; done
 cp README.md LICENSE THIRD_PARTY_NOTICES.md VERSION CHANGELOG.md CONTRIBUTING.md .gitignore "$stage/Source/"
 cp vendor/foo2zjs.tar.xz vendor/pappl.tar.gz vendor/libressl.tar.gz vendor/pkgconf.tar.xz "$stage/Source/vendor/"
 printf '%s\n' 'Run sh scripts/unpack-sources.sh, then sh scripts/build.sh (Apple silicon and Xcode tools required).' > "$stage/Source/BUILD.txt"

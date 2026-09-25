@@ -6,3 +6,6 @@
 *.yml text eol=lf
 *.icns binary
 *.png binary
+
+# Unified diffs retain upstream context whitespace.
+*.patch -whitespace

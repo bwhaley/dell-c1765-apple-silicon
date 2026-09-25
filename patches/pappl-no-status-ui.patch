@@ -1,0 +1,20 @@
+--- a/pappl/mainloop-subcommands.c
++++ b/pappl/mainloop-subcommands.c
+@@ -597,7 +597,7 @@
+ 					// Temporary directory
+   const char		*xdg_config_home = getenv("XDG_CONFIG_HOME");
+ 					// Freedesktop per-user config directory
+-#ifdef __APPLE__
++#if defined(__APPLE__) && !defined(PAPPL_NO_STATUS_UI)
+   pthread_t		tid;		// Thread ID
+ #endif // __APPLE__
+ 
+@@ -770,7 +770,7 @@
+   pthread_mutex_unlock(&mainloop_mutex);
+ 
+   // Run the system until shutdown...
+-#ifdef __APPLE__ // TODO: Implement private/public API for running with UI
++#if defined(__APPLE__) && !defined(PAPPL_NO_STATUS_UI) // Optional menu-bar UI
+   auditinfo_addr_t	ainfo;		// Information about this process
+ 
+   if (!getaudit_addr(&ainfo, sizeof(ainfo)) && (ainfo.ai_flags & AU_SESSION_FLAG_HAS_GRAPHIC_ACCESS))
