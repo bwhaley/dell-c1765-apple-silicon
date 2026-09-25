@@ -26,7 +26,7 @@ jobs:
           sh scripts/build.sh
       - name: Package binaries and corresponding source
         run: sh scripts/package.sh
-      - uses: actions/upload-artifact@v6
+      - uses: actions/upload-artifact@v7
         with:
           name: DellNative-macOS-arm64
           path: |
