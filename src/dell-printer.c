@@ -162,6 +162,31 @@ static bool end_job(pappl_job_t *job, pappl_pr_options_t *o, pappl_device_t *dev
   return ok;
 }
 
+// PAPPL publishes these supplies as IPP marker attributes and in its web UI.
+static bool update_supplies(pappl_printer_t *printer) {
+  const char *uri = papplPrinterGetDeviceURI(printer);
+  // Opening a file device for status would truncate the capture output.
+  if (!uri || (strncmp(uri, "socket://", 9) && strncmp(uri, "dnssd://", 8) &&
+               strncmp(uri, "snmp://", 7))) return true;
+
+  pappl_device_t *device = papplPrinterOpenDevice(printer);
+  // PAPPL also returns NULL when a job owns the device. Leave its cache alone.
+  if (!device) return false;
+
+  pappl_supply_t supplies[PAPPL_MAX_SUPPLY];
+  int count = papplDeviceGetSupplies(device, PAPPL_MAX_SUPPLY, supplies);
+  bool ok = count > 0;
+  if (count > PAPPL_MAX_SUPPLY) count = PAPPL_MAX_SUPPLY;
+  if (!ok) {
+    // Keep known cartridge names, but never present stale readings as current.
+    count = papplPrinterGetSupplies(printer, PAPPL_MAX_SUPPLY, supplies);
+    for (int i = 0; i < count; i++) supplies[i].level = -1;
+  }
+  papplPrinterSetSupplies(printer, count, supplies);
+  papplPrinterCloseDevice(printer);
+  return ok;
+}
+
 static bool driver(pappl_system_t *system,const char *name,const char *uri,const char *id,
                    pappl_pr_driver_data_t *d,ipp_t **attrs,void *data) {
   (void)system;(void)name;(void)uri;(void)id;(void)attrs;(void)data;
@@ -169,6 +194,8 @@ static bool driver(pappl_system_t *system,const char *name,const char *uri,const
     if (!access(icon_paths[i],R_OK) && strlen(icon_paths[i])<sizeof(d->icons[i].filename))
       papplCopyString(d->icons[i].filename,icon_paths[i],sizeof(d->icons[i].filename));
   papplCopyString(d->make_and_model,"Dell C1765nfw Native (Prototype)",sizeof(d->make_and_model));
+  d->has_supplies=true;
+  d->status_cb=update_supplies;
   d->format=NULL; // Accept raster input only; do not expose raw-job passthrough.
   d->rstartjob_cb=start_job; d->rstartpage_cb=start_page;
   d->rwriteline_cb=write_line; d->rendpage_cb=end_page; d->rendjob_cb=end_job;

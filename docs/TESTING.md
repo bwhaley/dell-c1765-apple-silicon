@@ -68,3 +68,23 @@ used rather than recording a machine-specific IP address in the repository.
 - Restarted the service and checked that the menu-bar app did not return.
 - All 10 Bonjour discovery/selection tests pass. No physical pages were printed
   for this update.
+
+## Supply monitoring
+
+After building, run `sh scripts/test-supplies.sh`. The tests exercise the actual
+driver callback with a fake device: reported levels and names, unknown/empty
+levels, query failure and recovery, busy devices, bounded supply counts, and
+file capture queues that must never be opened for status. CI runs these tests.
+
+For hardware validation, rebuild and run the updated service, then open the
+printer's status page at http://localhost:8631/. Compare each cartridge with the
+printer's own web interface and check the macOS supply display. Disable SNMP
+temporarily to check unknown readings, then restore it and check recovery.
+Validated on 2026-10-09 with a physical C1765nfw: cyan 82%, magenta 76%, yellow
+46%, and black 58%. The rebuilt driver matched the printer's SNMP supply table;
+Get-Printer-Attributes returned all four names, colors, toner types, percentages,
+and printer-supply values. A temporary web service displayed the same levels.
+No pages were printed and the installed service was not replaced. macOS's
+supply display and disabling/re-enabling SNMP on hardware remain untested.
+The clean native build, callback tests, 10 discovery tests, shell syntax checks,
+and repeated application of the dependency patches passed.

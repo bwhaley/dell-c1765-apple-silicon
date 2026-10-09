@@ -12,7 +12,8 @@ see assets/README.md for its origin and attribution.
 | pkgconf | 2.3.0 | ISC-style; COPYING | Build tool only |
 
 The PAPPL source is modified by patches/pappl-no-status-ui.patch to allow this
-build to omit the macOS menu-bar UI. The patch and build flags are included in
+build to omit the macOS menu-bar UI. The supply-level patch in patches/pappl-supply-levels.patch also preserves
+unknown readings instead of substituting 50 percent. The patches and build flags are included in
 the corresponding source bundle; upstream notices remain unchanged.
 
 Exact source URLs and SHA-256 hashes are in scripts/sources.urls and

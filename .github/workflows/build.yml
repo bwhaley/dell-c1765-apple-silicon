@@ -24,6 +24,8 @@ jobs:
         run: |
           sh scripts/unpack-sources.sh
           sh scripts/build.sh
+      - name: Test supply monitoring
+        run: sh scripts/test-supplies.sh
       - name: Package binaries and corresponding source
         run: sh scripts/package.sh
       - uses: actions/upload-artifact@v7

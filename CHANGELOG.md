@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.4.0 — 2026-10-09
+
+- Read network-printer toner levels through SNMP and expose them through IPP
+  and the web supplies page.
+- Report unavailable supply readings as unknown instead of an invented 50%.
+- Protect file capture queues from being opened by supply monitoring.
+
 ## 0.3.1 — 2026-09-25
 
 - Run the printer service without PAPPL's menu-bar icon.

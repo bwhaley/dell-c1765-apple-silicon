@@ -1,0 +1,52 @@
+--- a/pappl/device-network.c
++++ b/pappl/device-network.c
+@@ -1901,6 +1901,10 @@
+     _PAPPL_DEBUG("pappl_socket_supplies: charset=%d\n", sock->charset);
+   }
+ 
++  // Reset missing/failed readings to unknown instead of retaining old values.
++  for (i = 0; i < _PAPPL_MAX_SNMP_SUPPLY; i ++)
++    sock->levels[i] = -2;
++
+   // Query supplies...
+   if (sock->num_supplies > 0)
+   {
+@@ -1919,14 +1923,19 @@
+   {
+     int percent;			// Supply level
+ 
+-    if (sock->max_capacities[i] > 0 && sock->levels[i]  >= 0)
+-      percent = 100 * sock->levels[i] / sock->max_capacities[i];
++    if (sock->max_capacities[i] > 0 && sock->levels[i] >= 0)
++      percent = sock->levels[i] >= sock->max_capacities[i] ? 100 :
++                (int)(100.0 * sock->levels[i] / sock->max_capacities[i]);
+     else if (sock->levels[i] >= 0 && sock->levels[i] <= 100)
+       percent = sock->levels[i];
+     else
+-      percent = 50;
+-
+-    if (sock->supplies[i].is_consumed)
++      percent = -1; // Unknown, including SNMP "some remaining" (-3).
++
++    if (percent > 100)
++      percent = 100;
++    if (percent < 0)
++      sock->supplies[i].level = -1;
++    else if (sock->supplies[i].is_consumed)
+       sock->supplies[i].level = percent;
+     else
+       sock->supplies[i].level = 100 - percent;
+--- a/pappl/printer-webif.c
++++ b/pappl/printer-webif.c
+@@ -1422,6 +1422,11 @@
+ 
+   for (i = 0; i < num_supply; i ++)
+   {
++    if (supply[i].level < 0)
++    {
++      papplClientHTMLPrintf(client, "<tr><th>%s</th><td colspan=\"4\">Unknown</td></tr>\n", supply[i].description);
++      continue;
++    }
+     papplClientHTMLPrintf(client, "<tr><th>%s</th><td colspan=\"4\"><span class=\"bar\" style=\"background: %s; padding: 0px %.1f%%;\" title=\"%d%%\"></span><span class=\"bar\" style=\"background: transparent; padding: 0px %.1f%%;\" title=\"%d%%\"></span></td></tr>\n", supply[i].description, backgrounds[supply[i].color], supply[i].level * 0.5, supply[i].level, 50.0 - supply[i].level * 0.5, supply[i].level);
+   }
+ 

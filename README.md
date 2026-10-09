@@ -66,6 +66,21 @@ Run the installed `Uninstall.command` (or the one in the package) to remove the
 native queue and service and move installed files to Trash. Other printer queues
 and the legacy Dell driver are left alone. macOS may retain cached printer icons.
 
+## Toner levels
+
+The service reads toner and other reported supply levels using the printer's
+SNMP interface and publishes them through IPP and the web status page at
+http://localhost:8631/. macOS clients can use the IPP supply attributes for their
+supply display. Enable SNMP v1 with the read community `public` on the printer
+and allow UDP port 161 between the Mac and printer. Custom communities and
+SNMP v3 are not currently supported.
+
+Levels refresh when clients request printer status while the printer is idle.
+Unavailable or unspecified readings are reported as unknown. A failed SNMP
+query does not prevent printing. File capture queues are never opened for
+supply queries. Live C1765nfw readings and IPP publication have been verified; the macOS
+supply display has not yet been checked.
+
 ## Build from source
 
 On an Apple-silicon Mac with Xcode command-line tools (`xcode-select --install`):
@@ -93,7 +108,7 @@ installed service before using it. See [testing](docs/TESTING.md),
 
 One-sided plain paper only; one paper size per job; at most 100 pages per job.
 Basic RGB-to-CMYK conversion and ordered dithering, without calibrated profiles.
-No scanning, fax, duplex, USB, or toner-level monitoring. Cancellation is checked
+No scanning, fax, duplex, or USB. Cancellation is checked
 before output and between output chunks, not during encoding. Copies, A4 physical
 output, and extensive failure recovery are not yet validated. See the testing
 record for what has actually been checked.
